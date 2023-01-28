@@ -34,7 +34,9 @@ We recommend users to use docker container to evaluate the artifacts.
 
 There are two ways to run $\mathrm{HistFuzz}$ and reproduce the results on your machines.
 
-* ![Recommended-Yes](https://img.shields.io/badge/Recommended-Yes-brightgreen) **Downloading Docker Image.** For macOS or Linux users, you can follow the following commands to get into the container. For Windows users, you need to download [docker desktop](https://www.docker.com/products/docker-desktop) and [Cygwin](https://www.cygwin.com/) first and make sure that there is no error message when the docker destop starts for the first time. Then, you need to open Cygwin and run the commands below. If there is any error messages, please follow the pop-up link to fix the problems. Usually, the problem is that BIOS disables cpu virtualization function. You can fix it by entering BIOS, enabling the function, and restarting.
+* ![Recommended-Yes](https://img.shields.io/badge/Recommended-Yes-brightgreen) **Downloading Docker Image.** For macOS or Linux users, you can directly download the Docker container image from the [shared link](https://drive.google.com/file/d/1JN8hG8qKGoQMcn8Jnmbw3iqLpWYNhT_q/view?usp=sharing) and follow the following commands to get into the container. 
+ 
+    For Windows users, you need to download [docker desktop](https://www.docker.com/products/docker-desktop) and [Cygwin](https://www.cygwin.com/) first and make sure that there is no error message when the docker destop starts for the first time. Then, you need to open Cygwin and run the commands below. If there is any error messages, please follow the pop-up link to fix the problems. Usually, the problem is that BIOS disables cpu virtualization function. You can fix it by entering BIOS, enabling the function, and restarting.
 
 ```
 # You can directly download the Image package histfuzz.tar.zip (about 4G) from the shared link <https://drive.google.com/file/d/1JN8hG8qKGoQMcn8Jnmbw3iqLpWYNhT_q/view?usp=sharing>.
