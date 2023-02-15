@@ -54,11 +54,28 @@ temp = rootpath + "/temp"
 
 
 def run(skeleton_file, argument, solver1, solver2, solver1_bin, solver2_bin, core_num, cores, add_option, mutant, tactic=None):
+    """
+    Runs multiple fuzzing processes in parallel, each with its own core affinity.
+    :param skeleton_file: Path to the skeleton file to be used in the fuzzing process.
+    :param argument: Command line arguments for the fuzzing process.
+    :param solver1: Name of the first SMT solver to use in the fuzzing process.
+    :param solver2: Name of the second SMT solver to use in the fuzzing process.
+    :param solver1_bin: Path to the binary of the first SMT solver.
+    :param solver2_bin: Path to the binary of the second SMT solver.
+    :param core_num: Number of the first CPU core to use in the fuzzing process.
+    :param cores: Number of CPU cores to use in total for the fuzzing process.
+    :param add_option: Additional command line option to pass to the solvers.
+    :param mutant: Whether to use mutant or normal skeleton.
+    :param tactic: Optional parameter to pass to the solvers.
+    """
+    # Iterate over the range of number of CPU cores to use
     for i in range(cores):
+        # Spawn a new fuzzing process
         process = multiprocessing.Process(target=fuzz, args=(
             skeleton_file, solver1, solver2, solver1_bin, solver2_bin, 10, argument["incremental"], core_num, add_option, rules, buggy, temp, argument, mutant, tactic))
         time.sleep(1)
         process.start()
+        # Set the CPU affinity for the process to the current core number
         os.system("taskset -p -c " + str(core_num) + " " + str(process.pid))
         core_num += 1
 
