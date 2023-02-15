@@ -65,22 +65,35 @@ def run(skeleton_file, argument, solver1, solver2, solver1_bin, solver2_bin, cor
 
 def auto_collect_buggy_formulas(token, store_path):
     """
-    collect bug-triggering formulas in several solvers' bug trackers
-    :param token: GitHub personal token
-    :param store_path:
-    :return:
+    This function collects bug-triggering formulas from multiple solvers' bug trackers concurrently
+    using Python's multiprocessing library.
+
+    :param token: A GitHub personal access token to access the bug trackers of solvers.
+    :param store_path: A string representing the path where the collected formulas will be stored.
+    :return: None
     """
+    
+    # A list of solvers whose bug trackers will be searched for bug-triggering formulas
     solvers = ["z3", "cvc5", "yices2", "opensmt", "cvc5-projects"]
+    
+    # A list to hold all the processes
     process_pool = []
+    
+    # Start a new process for each solver and add the process to the process_pool
     for solver in solvers:
         p = multiprocessing.Process(target=collect_buggy_formula, args=(token, solver, store_path))
         p.start()
         process_pool.append(p)
+        
+    # Wait for all the processes to finish
     while process_pool:
         for index, process in enumerate(process_pool):
+            # Check if the process is still alive
             if not process.is_alive():
+                # Remove the process from the pool if it has completed
                 process_pool.pop(index)
                 break
+
 
 def main():
     # Create an instance of MainArgumentParser class to handle command line arguments
